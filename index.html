@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>资源小宇宙 - 你的数字宝库</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        /* --- 全局样式与主题设计 --- */
+        :root {
+            --primary-color: #00aaff;
+            --secondary-color: #ff00ff;
+            --bg-color: #0d1117;
+            --section-bg-color: #161b22;
+            --card-bg-color: #21262d;
+            --border-color: #30363d;
+            --text-color: #c9d1d9;
+            --text-secondary-color: #8b949e;
+            /* 金色和热卖色 */
+            --gold-color: #ffd700; 
+            --hot-sale-start: #ff4500;
+            --hot-sale-end: #ff8c00;
+            /* 新课程颜色 */
+            --cyan-glow: #00ffff;
+            --purple-gradient-end: #9400d3;
+            /* 抖音课程颜色改为霓虹绿 */
+            --green-glow: #39ff14; /* Neon Green */
+            --dark-green-gradient-end: #00b300;
+            /* 尖端技术高亮颜色 */
+            --tech-highlight-color: #00e5ff; /* Bright Cyan */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 金色高光动画 */
+        @keyframes subtleGlowGold {
+            from { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+            to { box-shadow: 0 0 30px rgba(255, 215, 0, 0.7); }
+        }
+        
+        /* 科技蓝高光动画 */
+        @keyframes subtleGlowTech {
+            from { box-shadow: 0 0 10px rgba(0, 229, 255, 0.3); }
+            to { box-shadow: 0 0 30px rgba(0, 229, 255, 0.7); }
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Helvetica Neue', 'Arial', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(120, 0, 255, 0.1), transparent 30%),
+                radial-gradient(circle at 85% 30%, rgba(0, 170, 255, 0.1), transparent 30%);
+            background-attachment: fixed;
+        }
+
+        /* 【新增】顶部导航栏样式 */
+        .top-nav-bar {
+            background-color: rgba(22, 27, 34, 0.85); /* 使用 section-bg-color 的半透明版本 */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* 兼容 Safari */
+            padding: 12px 0;
+            text-align: center;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 9999; /* 确保在最顶层，高于弹窗的 z-index */
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .top-nav-bar a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .top-nav-bar a:hover {
+            color: var(--primary-color);
+            text-shadow: 0 0 8px var(--primary-color);
+        }
+        
+        .top-nav-bar a i {
+            margin-right: 8px;
+        }
+
+        .container { max-width: 1600px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; padding: 50px 20px; margin-bottom: 40px; animation: fadeIn 1s ease-out; }
+        .header h1 { font-size: 3.5rem; margin: 0; font-weight: 700; letter-spacing: 2px; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 15px rgba(0, 170, 255, 0.3), 0 0 25px rgba(255, 0, 255, 0.3); }
+        .header p { font-size: 1.2rem; color: var(--text-secondary-color); margin-top: 10px; }
+        main { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .resource-section { background-color: var(--section-bg-color); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; animation: fadeIn 1.5s ease-out; }
+        .section-title { display: flex; align-items: center; font-size: 1.8rem; color: var(--primary-color); margin: 0 0 25px 0; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); }
+        .section-title i { margin-right: 15px; text-shadow: 0 0 10px var(--primary-color); }
+        .resource-list { display: flex; flex-direction: column; gap: 15px; }
+        .resource-item { background-color: var(--card-bg-color); border: 1px solid var(--border-color); border-radius: 10px; padding: 20px 25px; display: flex; align-items: center; justify-content: space-between; transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease; }
+        .resource-item:hover { background-color: #2a2f37; border-color: var(--primary-color); transform: scale(1.02); }
+
+        /* 金色高亮卡片 */
+        .resource-item.featured-gold {
+            border: 2px solid var(--gold-color);
+            background-color: #2c2a1f;
+            animation: subtleGlowGold 3s infinite alternate;
+            transform: scale(1.02);
+        }
+        .resource-item.featured-gold:hover { transform: scale(1.03); }
+
+        /* 科技蓝高亮卡片 */
+        .resource-item.featured-tech {
+            border: 2px solid var(--tech-highlight-color);
+            background-color: #1f2a2c; /* 深青色背景 */
+            animation: subtleGlowTech 3s infinite alternate;
+            transform: scale(1.02);
+        }
+        .resource-item.featured-tech:hover { transform: scale(1.03); }
+
+        .item-content h3 { font-size: 1.2rem; margin: 0 0 5px 0; color: var(--text-color); display: flex; align-items: center; }
+        .featured-gold .item-content h3 { color: var(--gold-color); }
+        .item-content h3.title-cyan { color: var(--cyan-glow); text-shadow: 0 0 10px var(--cyan-glow); }
+        .item-content h3.title-green { color: var(--green-glow); text-shadow: 0 0 10px var(--green-glow); }
+        
+        .item-content p { font-size: 0.9rem; color: var(--text-secondary-color); margin: 0; }
+        .update-badge { background: linear-gradient(90deg, var(--secondary-color), #c700c7); color: #fff; font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; margin-left: 10px; font-weight: 500; text-shadow: none; display: inline-block; }
+        .item-action { flex-shrink: 0; }
+        .resource-link { display: inline-block; background: linear-gradient(90deg, var(--primary-color), #0077cc); color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; text-align: center; white-space: nowrap; transition: transform 0.2s ease, box-shadow 0.2s ease; cursor: pointer; }
+        .resource-link:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--primary-color); }
+        
+        /* 按钮样式 */
+        .resource-link.hot-sale { background: linear-gradient(90deg, var(--hot-sale-start), var(--hot-sale-end)); box-shadow: 0 0 15px rgba(255, 69, 0, 0.7); }
+        .resource-link.hot-sale:hover { box-shadow: 0 0 25px var(--hot-sale-start); }
+        .resource-link.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; background: #555; box-shadow: none !important; transform: none !important; }
+        .resource-link.btn-unlock { background: linear-gradient(90deg, var(--cyan-glow), var(--purple-gradient-end)); box-shadow: 0 0 15px rgba(0, 255, 255, 0.5); }
+        .resource-link.btn-unlock:hover { box-shadow: 0 0 25px var(--cyan-glow); }
+        .resource-link.btn-green { background: linear-gradient(90deg, var(--green-glow), var(--dark-green-gradient-end)); box-shadow: 0 0 15px rgba(57, 255, 20, 0.5); }
+        .resource-link.btn-green:hover { box-shadow: 0 0 25px var(--green-glow); }
+
+        .resource-link i { margin-right: 8px; }
+
+        /* 弹窗样式 */
+        .modal-overlay { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.8); justify-content: center; align-items: center; }
+        .modal-content { background-color: var(--section-bg-color); margin: 5% auto; padding: 30px 40px; border: 1px solid var(--gold-color); width: 80%; max-width: 600px; border-radius: 15px; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); position: relative; animation: fadeIn 0.5s; text-align: center; }
+        .modal-close { color: var(--text-secondary-color); position: absolute; top: 10px; right: 20px; font-size: 30px; font-weight: bold; cursor: pointer; }
+        .modal-close:hover { color: var(--primary-color); }
+        .modal-title { color: var(--gold-color); font-size: 2rem; margin-bottom: 20px; }
+        .sales-pitch { text-align: left; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
+        .sales-pitch ul { list-style: none; padding: 0; }
+        .sales-pitch li { margin-bottom: 10px; padding-left: 20px; position: relative; }
+        .sales-pitch li::before { content: '⭐'; position: absolute; left: 0; }
+        .payment-section h4 { color: var(--hot-sale-start); font-size: 1.5rem; margin-top: 20px; margin-bottom: 10px; }
+        .qr-code { width: 200px; height: 200px; margin: 15px auto; border: 1px solid var(--border-color); }
+        
+        /* 演示链接按钮样式 */
+        .btn-demo {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            padding: 8px 18px;
+            margin-bottom: 25px;
+        }
+        .btn-demo:hover {
+            background: var(--primary-color);
+            color: #fff;
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        @media (max-width: 1200px) { main { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { main { grid-template-columns: 1fr; } .header h1 { font-size: 2.5rem; } .resource-item { flex-direction: column; align-items: flex-start; gap: 15px; } .item-content { margin-right: 0; } .modal-content { width: 90%; padding: 20px; } }
+        .footer { text-align: center; padding: 30px; margin-top: 40px; border-top: 1px solid var(--border-color); color: var(--text-secondary-color); }
+    </style>
+</head>
+<body>
+    
+    <!-- 【新增】顶部导航栏 -->
+    <nav class="top-nav-bar">
+        <a href="https://3yuedaohang.com" target="_blank">
+            <i class="fas fa-home"></i> 返回主导航
+        </a>
+    </nav>
+    
+    <div class="container">
+        <header class="header"><h1>资源小宇宙</h1><p>探索、发现、获取。你的下一站数字宝藏。</p></header>
+        <main>
+            <!-- 影音剧场 -->
+            <section class="resource-section">
+                <h2 class="section-title"><i class="fas fa-film"></i>影音剧场<span class="update-badge">持续更新</span></h2>
+                <div class="resource-list"><div class="resource-item"><div class="item-content"><h3>海外短剧完整版</h3><p>精选海外爆款短剧，高清完整版，内容持续更新中。</p></div><div class="item-action"><a href="https://pan.quark.cn/s/7cb72f228661" target="_blank" class="resource-link"><i class="fas fa-paper-plane"></i>传送到资源</a></div></div></div>
+            </section>
+            <!-- 独家福利 -->
+            <section class="resource-section">
+                <h2 class="section-title"><i class="fas fa-gift"></i>独家福利</h2>
+                <div class="resource-list">
+                    <div class="resource-item">
+                        <div class="item-content"><h3 class="title-green">抖音免费课程</h3><p>被封无数次的视频。本模块作为福利免费开放，点击直达网盘获取这份禁忌的知识遗物。</p></div>
+                        <div class="item-action"><a href="https://pan.quark.cn/s/711beede5511" target="_blank" class="resource-link btn-green">获取遗物</a></div>
+                    </div>
+                    <div class="resource-item featured-gold"> 
+                        <div class="item-content"><h3>站长做自媒体经验分享<span class="update-badge">站长亲授</span></h3><p>手把手教你如何寻找海外资源，通过AI处理，变为自己原创视频，获取高流量播放。</p></div>
+                        <div class="item-action"><a id="openSaleBtn" class="resource-link hot-sale"><i class="fas fa-fire"></i>立即咨询</a></div>
+                    </div>
+                </div>
+            </section>
+            <!-- 副业航线 -->
+            <section class="resource-section">
+                <h2 class="section-title"><i class="fas fa-rocket"></i>副业航线</h2>
+                <div class="resource-list">
+                    <div class="resource-item"><div class="item-content"><h3>赚钱副业合集<span class="update-badge">更新</span></h3><p>汇集多种经过验证的线上线下副业项目，助你开启第二收入曲线。</p></div><div class="item-action"><a href="https://pan.quark.cn/s/71dc0f41479c" target="_blank" class="resource-link"><i class="fas fa-paper-plane"></i>传送到资源</a></div></div>
+                </div>
+            </section>
+            <!-- AI 纪元 -->
+            <section class="resource-section">
+                <h2 class="section-title"><i class="fas fa-robot"></i>AI 纪元</h2>
+                <div class="resource-list">
+                    <div class="resource-item">
+                        <div class="item-content">
+                            <h3>AI绘画全系列课程<span class="update-badge">更新</span></h3>
+                            <p>从Midjourney到Stable Diffusion，再到ComfyUI，全面掌握AI绘画技巧。</p>
+                        </div>
+                        <div class="item-action">
+                            <a href="https://pan.quark.cn/s/a8decb74fc97" target="_blank" class="resource-link"><i class="fas fa-paper-plane"></i>传送到资源</a>
+                        </div>
+                    </div>
+                    <div class="resource-item">
+                        <div class="item-content">
+                            <h3>AI人工智能课</h3>
+                            <p>系统学习人工智能基础知识与前沿应用，让你在智能时代占领先机。</p>
+                        </div>
+                        <div class="item-action">
+                            <a href="https://pan.quark.cn/s/2580b84ce512" target="_blank" class="resource-link"><i class="fas fa-paper-plane"></i>传送到资源</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+              <!-- 尖端技术 -->
+              <section class="resource-section">
+                <h2 class="section-title"><i class="fas fa-network-wired"></i>尖端技术</h2>
+                <div class="resource-list">
+                    <div class="resource-item featured-tech">
+                        <div class="item-content"><h3 class="title-cyan">完美网络搭建课程</h3><p>面向进阶用户，深入VPS、软路由、TK高速网络、协议优化。打造属于你自己的高性能、高安全性的网络帝国。</p></div>
+                        <div class="item-action"><a href="lesson/index.html" target="_blank" class="resource-link btn-unlock">解锁奥义</a></div>
+                    </div>
+                </div>
+            </section>
+            <!-- 硬核技艺 -->
+            <section class="resource-section">
+                <h2 class="section-title"><i class="fas fa-cogs"></i>硬核技艺</h2>
+                <div class="resource-list">
+                    <div class="resource-item"><div class="item-content"><h3>全球顶级黑科技软件</h3><p>搜罗全球范围内的实用、强大、有趣的黑科技软件，极大提升你的生产力。</p></div><div class="item-action"><a href="https://pan.quark.cn/s/7a1214678f33" target="_blank" class="resource-link"><i class="fas fa-paper-plane"></i>传送到资源</a></div></div>
+                    <div class="resource-item"><div class="item-content"><h3>搭建教学 (待上传)</h3><p>学习搭建个人网站、云盘、博客等实用服务的完整流程。</p></div><div class="item-action"><a href="#" target="_blank" class="resource-link disabled"><i class="fas fa-paper-plane"></i>传送到资源</a></div></div>
+                </div>
+            </section>
+          
+
+        </main>
+        <footer class="footer"><p>&copy; 2024 资源小宇宙. All rights reserved.</p></footer>
+    </div>
+
+    <!-- 支付与详情模态弹出框 -->
+    <div id="paymentModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" id="closeModalBtn">&times;</span>
+            <h2 class="modal-title">🚀 站长一对一指导 🚀</h2>
+            
+            <div class="sales-pitch">
+                <p>还在独自摸索，反复碰壁？站长为你提供 **40分钟一对一指导课**，倾囊相授所有自媒体实战经验，帮你解决核心问题，指明方向！</p>
+                <p>你将获得：</p>
+                <ul>
+                    <li>**问题诊断**：针对你的现状，精准分析瓶颈与难题。</li>
+                    <li>**核心策略**：分享我验证过的高效资源挖掘、AI处理及流量获取策略。</li>
+                    <li>**路径规划**：为你量身定制下一步的行动计划，避免走弯路。</li>
+                    <li>**问答解惑**：你有任何问题，我知无不言，言无不尽。</li>
+                </ul>
+                <p>这不仅是一节课，更是一次加速你成长的战略咨询！</p>
+            </div>
+
+            <div class="payment-section">
+                <a href="#" target="_blank" class="resource-link btn-demo"><i class="fas fa-play-circle"></i> 查看课程大纲</a>
+                
+                <h4>一对一指导课：¥ 200.00</h4>
+                <p>请使用微信/支付宝扫码支付，预约指导时间</p>
+                
+                <img src="https://via.placeholder.com/200x200?text=Your+Payment+QR+Code" alt="支付二维码" class="qr-code">
+                
+                <p><small>支付后请截图联系站长（微信号：XXXXX）预约时间。</small></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var modal = document.getElementById("paymentModal");
+        var btn = document.getElementById("openSaleBtn");
+        var span = document.getElementById("closeModalBtn");
+        if(btn) { btn.onclick = function(event) { event.preventDefault(); modal.style.display = "flex"; } }
+        if(span) { span.onclick = function() { modal.style.display = "none"; } }
+        window.onclick = function(event) { if (event.target == modal) { modal.style.display = "none"; } }
+    </script>
+</body>
+</html>
